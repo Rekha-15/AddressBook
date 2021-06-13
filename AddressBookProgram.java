@@ -1,7 +1,10 @@
 package com;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+
+import com.Person;
 
 /**
  * @author rekha
@@ -11,48 +14,35 @@ import java.util.Scanner;
  *implementing from IAddressBook interface
  */
 
-public class AddressBookProgram implements IAddressBook 
+public class AddressBookProgram
 {
 	
-	Scanner scanner = new Scanner(System.in);
-	Scanner sc = new Scanner(System.in);
-	List<Person> personList = new ArrayList<Person>();
+	private static Scanner sc = new Scanner(System.in);
+	 Map<String,Person>hashmap=new HashMap<>();
 	
-	public void add() 
-	{
-	    System.out.println("Enter your first name");
-	    String firstName = scanner.nextLine();
-	    System.out.println("Enter your last name");
-	    String lastName = scanner.nextLine();
-	    System.out.println("Enter your address");
-	    String address = scanner.nextLine();
-	    System.out.println("Enter your city");
-	    String city = scanner.nextLine();
-	    System.out.println("Enter your state");
-	    String state = scanner.nextLine();
-	    System.out.println("Enter your phone");
-	    long mobileNo = scanner.nextLong();
-	    System.out.println("Enter your zip code");
-	    int zip = scanner.nextInt();
-	        
-	    Person person1 = new Person(firstName, lastName, address, city, state, mobileNo, zip);
-	    personList.add(person1);
-	    System.out.println("Contact added successfully");
-         }
-	
-	/**
-	 * Creating display method to display the contact details 
-	 */
-	
-	 public void display() 
-	 {
-	      for(int i = 0; i< personList.size(); i++) 
-	      {
-	           Person person = personList.get(i);
-	    	   System.out.println("FirstName:"+person.getFirstName()+"\n"+"LastName:"+person.getLastName()+"\n"+"Adress:"+person.getAddress()+"\n"
-				      +"City:"+person.getCity()+"\n"+"State:"+person.getCity()+"Phone-Number:"+person.getMobileNo()+"\n"+"Pin-code:"+person.getPincode());
-	    	}
+	 private void add() {
+		 Person person = new Person();
+		 System.out.println("First Name :");
+		 person.setFirstName(sc.next());
+		 System.out.println("Last name : ");
+		 person.setLastName(sc.next());
+		 System.out.println("Address :");
+		 person.setAddress(sc.next());
+		 System.out.println("City :");
+		 person.setCity(sc.next());
+		 System.out.println("State :");
+		 person.setState(sc.next());
+		 System.out.println("Zip :");
+		 person.setZip(sc.next());
+		 System.out.println("Phone :");
+		 person.setPhone(sc.next());
+		 System.out.println("Email :");
+		 person.setEmail(sc.next());
+		 
+		 hashmap.put(person.getFirstName(), person);
+		 System.out.println(hashmap);
 	 }
+	
 	 
 	 /**
 	  * creating the method to edit the contact details already given to address book
@@ -60,45 +50,63 @@ public class AddressBookProgram implements IAddressBook
 	  *If contact person is not available or null it display invalid statement
 	  */ 
 	
-	 public void edit(String firstName) 
-	 {
-             for (int i = 0; i < personList.size(); i++) 
-             {
-            	 {
-            		 if(personList.get(i).getFirstName().equals(firstName)) 
-            		 {
-              	        Person person = personList.get(i);
-            	        Scanner scanner = new Scanner(System.in);
-
-            	        System.out.println("Hi " + person.getFirstName() + " please enter your  new Address");
-                        String address = scanner.nextLine();
-                        person.setAddress(address);
-
-                        System.out.println("Hi " + person.getFirstName() + " please enter your  new city");
-                        String city = scanner.nextLine();
-                        person.setCity(city);
-
-                        System.out.println("Hi " + person.getFirstName() + " please enter your  new state");
-                        String state = scanner.nextLine();
-                        person.setState(state);
-
-                        System.out.println("Hi " + person.getFirstName() + " please enter your  new Zip Code");
-                        int zip = scanner.nextInt();
-                        person.setPincode(zip);
-
-                       System.out.println("Hi " + person.getFirstName() + " please enter your  new Phone No");
-                       int PhoneNo = scanner.nextInt();
-                       person.setMobileNo(PhoneNo);
-
-                        System.out.println("Hi " + person.getFirstName() + " you have sucessfully updated");
-            		 }
-            		 {
-            			 System.out.println("Invalid"+"\n");
-            		 }
-            	 }
-          }
-            
-        }
+	private void edit() {
+		 Person person = new Person();
+		String enteredName;
+		System.out.println("Enter First name of contact to edit it ");
+		enteredName=sc.next();
+		Set<String>Keys=hashmap.keySet();
+		for(String i:Keys)
+		{
+			if(i.equals(enteredName))
+			{
+				int check=0;
+				System.out.println("Person found , what do you want to edit ?");
+				System.out.println("Enter\n1.First Name\n2.Last Name\n3.Address\n4.city\n5.State\n6.Zip\n7.Phone\n8.Email");
+				check=sc.nextInt();
+				switch(check) {
+				case 1:
+					System.out.println("Enter new first name");
+					person.setFirstName(sc.next());
+					break;
+				case 2:
+					System.out.println("Enter new last name");
+					person.setLastName(sc.next());
+					break;
+				case 3:
+					System.out.println("Enter new Address");
+					person.setAddress(sc.nextLine());
+					break;
+				case 4:
+					System.out.println("Enter new city");
+					person.setCity(sc.next());
+					break;
+				case 5:
+					System.out.println("Enter new state");
+					person.setState(sc.next());
+					break;
+				case 6:
+					System.out.println("Enter new zip");
+					person.setZip(sc.next());
+					break;
+				case 7:
+					System.out.println("Enter new phone number");
+					person.setPhone(sc.next());
+					break;
+				case 8:
+					System.out.println("Enter new email");
+					person.setEmail(sc.next());
+					break;
+				default :
+					System.out.println("Invalid Entry");
+						
+				}
+			}
+			hashmap.put(enteredName, person);
+		}
+		
+		
+	}
 	 
 	 /**
 	  * 
@@ -107,43 +115,27 @@ public class AddressBookProgram implements IAddressBook
 	  *If contact person is not available or null it display invalid statement
 	  */
 	
-	 public void delete(String name) 
-	 {
-            for (int i = 0; i < personList.size(); i++) 
-            {
-            	if(personList.get(i).getFirstName().equals(name)) 
-            	{
-            		Person person = personList.get(i);
-            		personList.remove(person);
-            	}
-            	else
-            	{
-            		System.out.println("Invalid"+"\n");
-            	}
-            	
-            }
-         }
-	 
-	 /**
-	  *Creating AddMultiplePerson method , so that user can add the contact details 
-	  *by entering person name user can delete the contact.
-	  *If contact person already present it display duplicate statement
-	  */
-
-	public void addMultiplePerson()
-	{
-        	 
-             System.out.println("Enter a person Name:");
-             String firstName = sc.nextLine();
-             for(int i = 0; i <  personList.size(); i++)
-             {
-        	        Person person = personList.get(i);
-			if(personList.get(i).getFirstName().equals(firstName)) 
+	private void delete() {
+		System.out.println("Enter First name of contact to delete it ");
+		String enteredName=sc.next();
+		Set<String>Keys=hashmap.keySet();
+		for(String i:Keys)
+		{
+			if(i.equals(enteredName))
 			{
-        		System.out.println("Duplicate");
-        	  	}	
+				hashmap.remove(i);
+			    System.out.println("Person removed from Address book");
+			}
+			else
+				System.out.println("Person not found");
 		}
+		
 	}
+	private void show() {
+		System.out.println(hashmap);
+		
+	}
+	 
 	
 	/**
 	  * Printing the welcome message
@@ -158,37 +150,33 @@ public class AddressBookProgram implements IAddressBook
 	  *4=deleting details
 	  */
 	   
-	public static void main(String[] args) 
-	{
-		System.out.println("Welcome to Address Book Program");
-		 
-		AddressBookProgram AddressBookProgram1 =new AddressBookProgram();
-	        boolean condition = true;
-	     
-	        while (condition == true)
-	        {
-	    	     Scanner scanner= new Scanner(System.in);
-	    	     Scanner option = new Scanner(System.in);
-	             System.out.println("What you want to perform ?"+"\n"+"1.Add Person"+"\n"+"2.Display"+"\n"+"3.Edit person"+"\n"+"4."+"Delete Person"+"\n"+"5.Add Multiple Person");
-	         
-                     switch(option.nextInt()) 
-                     {
-	                 case 1:AddressBookProgram1.add();
-	                       break;
-	             	 case 2:AddressBookProgram1.display(); 
-                               break;
-	                 case 3:System.out.println("Enter the firstName:");
-	                       String firstName = scanner.nextLine();
-	                       AddressBookProgram1.edit(firstName);
-	            	       break;
-			 case 4:System.out.println("Enter the Name of the person do you wants to delete");
-	                       String name = scanner.nextLine();
-	                       AddressBookProgram1.delete(name);
-	            	       break;
-			 case 5:AddressBookProgram1.addMultiplePerson();
-	                       break;
-			default:System.out.println("Thank You");
+	public static void main(String[] args) {
+		System.out.println("Welcome to Address Book Handling");
+		AddressBookProgram book = new AddressBookProgram();
+		boolean isExit = false;
+		while (!isExit) {
+			System.out.println("Enter options\n1.Add\n2.Edit\n3.Delete\n4.Show\n5.Exit");
+			int userInput =sc.nextInt();
+			switch (userInput) {
+			case 1: 
+				book.add();
+				break;
+			case 2:
+				book.edit();
+				break;
+			case 3:
+				book.delete();
+				break;
+			case 4:
+				book.show();
+				break;
+			case 5 :
+				isExit=true;
+				break;
+			default :
+				System.out.println("Invalid input");
 			}
 		}
 	}
+
 }
